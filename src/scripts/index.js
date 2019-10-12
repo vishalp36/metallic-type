@@ -23,14 +23,12 @@ class App {
 			dpr: devicePixelRatio || 1
 		}
 
-		console.log(map(this.vp.width, 375, 1920, 1, 6))
-
 		this.message = 'titan';
 		this.normalScale = 1;
 		this.normalDisplacement = 0.1;
 		this.matcapMap = 9;
 		this.normalMap = 1;
-		this.fontSize = map(this.vp.width, 375, 1920, 1, 6);
+		this.fontSize = map(this.vp.width, 300, 1920, 1, 6);
 		this.outline = false;
 		this.stroke = 15;
 
@@ -86,6 +84,11 @@ class App {
 		window.addEventListener('mousemove', e => {
 			const x = (e.clientX - this.vp.width*0.5) * 0.5;
 			const y = (e.clientY - this.vp.height*0.5) * 0.5;
+			this.msdfText.mesh.material.uniforms.mouse.value = [x,y];
+		});
+		window.addEventListener('touchmove', e => {
+			const x = (e.touches[0].clientX - this.vp.width*0.5) * 0.5;
+			const y = (e.touches[0].clientY - this.vp.height*0.5) * 0.5;
 			this.msdfText.mesh.material.uniforms.mouse.value = [x,y];
 		});
 

@@ -83,7 +83,7 @@ export default class MSDFText {
         const geo = this.geo;
         const mesh = this.mesh;
 
-        this.geo.computeBoundingBox();
+        geo.computeBoundingBox();
 
         this.boundingBox = {
             width: Math.abs(geo.boundingBox.min.x) + geo.boundingBox.max.x,
@@ -108,5 +108,6 @@ export default class MSDFText {
 
     resize({width, height, dpr}) {
         this.mesh.material.uniforms.resolution.value = [width*dpr, height*dpr];
+        this.geo.width = this.options.width / this.fontSize;
     }
 }

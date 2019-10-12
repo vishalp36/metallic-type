@@ -6,6 +6,12 @@ import * as dat from 'dat.gui';
 
 window.THREE = THREE;
 
+const map = (value, minA, maxA, minB, maxB, clamped = false) => {
+	if (clamped) value = Math.min(maxA, Math.max(minA, value));
+	return ((value - minA) / (maxA - minA)) * (maxB - minB) + minB;
+}
+
+
 class App {
 	constructor() {
 		this.animate = this.animate.bind(this);
@@ -17,12 +23,14 @@ class App {
 			dpr: devicePixelRatio || 1
 		}
 
+		console.log(map(this.vp.width, 375, 1920, 1, 6))
+
 		this.message = 'titan';
 		this.normalScale = 1;
 		this.normalDisplacement = 0.1;
 		this.matcapMap = 9;
 		this.normalMap = 1;
-		this.fontSize = 5;
+		this.fontSize = map(this.vp.width, 375, 1920, 1, 6);
 		this.outline = false;
 		this.stroke = 15;
 
@@ -140,8 +148,7 @@ class App {
 		this.camera.bottom = this.vp.height / - 2;
 		this.camera.updateProjectionMatrix();
 
-		this.msdfText.geo.width = this.vp.width*0.9;
-		this.msdfText.update();
+		this.msdfText.update(this.message.toUpperCase());
 	}
 }
 
